@@ -1,53 +1,56 @@
-// Function to perform addition
-function add(a, b) {
-    return a + b;
-}
+// Function to perform basic arithmetic operations
+function calculator() {
+    console.log("Welcome to the Calculator!");
+    console.log("Options:");
+    console.log("1. Add");
+    console.log("2. Subtract");
+    console.log("3. Multiply");
+    console.log("4. Divide");
+    console.log("5. Exit");
 
-// Function to perform subtraction
-function subtract(a, b) {
-    return a - b;
-}
+    const prompt = require('prompt-sync')(); // Import prompt-sync for user input
 
-// Function to perform multiplication
-function multiply(a, b) {
-    return a * b;
-}
+    while (true) {
+        const choice = prompt("Enter your choice (1-5): ");
 
-// Function to perform division
-function divide(a, b) {
-    if (b === 0) {
-        return "Error: Division by zero";
+        if (choice === "5") {
+            console.log("Exiting the calculator. Goodbye!");
+            break;
+        }
+
+        if (!["1", "2", "3", "4"].includes(choice)) {
+            console.log("Invalid choice. Please select a valid option.");
+            continue;
+        }
+
+        const num1 = parseFloat(prompt("Enter the first number: "));
+        const num2 = parseFloat(prompt("Enter the second number: "));
+
+        if (isNaN(num1) || isNaN(num2)) {
+            console.log("Invalid input. Please enter valid numbers.");
+            continue;
+        }
+
+        switch (choice) {
+            case "1":
+                console.log(`Result: ${num1} + ${num2} = ${num1 + num2}`);
+                break;
+            case "2":
+                console.log(`Result: ${num1} - ${num2} = ${num1 - num2}`);
+                break;
+            case "3":
+                console.log(`Result: ${num1} * ${num2} = ${num1 * num2}`);
+                break;
+            case "4":
+                if (num2 === 0) {
+                    console.log("Error: Division by zero is not allowed.");
+                } else {
+                    console.log(`Result: ${num1} / ${num2} = ${num1 / num2}`);
+                }
+                break;
+        }
     }
-    return a / b;
-}
-
-// Main function to operate the calculator
-function operateCalculator() {
-    const operator = prompt("Enter operator ( either +, -, * or / ): ");
-    const number1 = parseFloat(prompt("Enter first number: "));
-    const number2 = parseFloat(prompt("Enter second number: "));
-
-    let result;
-
-    switch (operator) {
-        case '+':
-            result = add(number1, number2);
-            break;
-        case '-':
-            result = subtract(number1, number2);
-            break;
-        case '*':
-            result = multiply(number1, number2);
-            break;
-        case '/':
-            result = divide(number1, number2);
-            break;
-        default:
-            return alert("Invalid operator");
-    }
-
-    alert("Result: " + result);
 }
 
 // Run the calculator
-operateCalculator();
+calculator();

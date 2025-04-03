@@ -1,0 +1,33 @@
+name: Email Report
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # Runs daily at 6 a.m.
+
+jobs:
+  email-report:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Read report file
+      id: read_report
+      run: |
+        REPORT_CONTENT=$(cat path/to/your/report.txt)
+        echo "report_content<<EOF" >> $GITHUB_ENV
+        echo "$REPORT_CONTENT" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+
+    - name: Send email
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.example.com
+        server_port: 587
+        username: ${{ secrets.SMTP_USERNAME }}
+        password: ${{ secrets.SMTP_PASSWORD }}
+        subject: "Daily Report"
+        body: ${{ env.report_content }}
+        to: recipient@example.com
+        from: sender@example.com
